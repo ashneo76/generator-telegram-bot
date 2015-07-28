@@ -35,6 +35,8 @@ def listener(messages):
 
             if msg == '/begin':
                 res = 'Hi there!'
+            else:
+                res = msg
 
         if send_markup:
             tb.send_message(chat_id, res, reply_markup=res_markup)
