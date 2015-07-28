@@ -61,6 +61,8 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.spawnCommand('pip2', ['install', '-r', this.props.username+'/requirements.txt']);
+    if(!this.options.skipInstall) {
+      this.spawnCommand('pip2', ['install', '-r', this.props.username+'/requirements.txt']);
+    }
   }
 });

@@ -9,15 +9,15 @@ describe('telegram-bot:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ skipInstall: true })
-      .withPrompts({ someOption: true })
+      .withPrompts({ username: 'test-bot' })
       .on('end', done);
   });
 
   it('creates files', function () {
     assert.file([
-      'config.yml',
-      'bot.py',
-      'requirements.txt'
+      'test-bot/config.yml',
+      'test-bot/bot.py',
+      'test-bot/requirements.txt'
     ]);
   });
 });
