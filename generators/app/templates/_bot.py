@@ -12,7 +12,8 @@ def main():
     global tb, api
     config = yaml.load(open('config.yml'))
 
-    tb = telebot.Telebot(config['telegram']['token'])
+    username = config['telegram']['whoami']
+    tb = telebot.TeleBot(config['telegram'][username]['token'])
     tb.set_update_listener(listener)
     tb.polling(interval=1)
 

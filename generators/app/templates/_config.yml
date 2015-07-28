@@ -1,4 +1,5 @@
 telegram:
+  whoami: <%= username %>
   <%= username %>:
     name: <%= name %>
     token: <%= token %>

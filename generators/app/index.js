@@ -37,17 +37,18 @@ module.exports = yeoman.generators.Base.extend({
 
   writing: {
     app: function () {
+      var botname = this.props.username;
       this.fs.copy(
         this.templatePath('_bot.py'),
-        this.destinationPath('bot.py')
+        this.destinationPath(botname+'/bot.py')
       );
       this.fs.copy(
         this.templatePath('_requirements.txt'),
-        this.destinationPath('requirements.txt')
+        this.destinationPath(botname+'/requirements.txt')
       );
       this.fs.copyTpl(
         this.templatePath('_config.yml'),
-        this.destinationPath('config.yml'),
+        this.destinationPath(botname+'/config.yml'),
         {
           name: this.props.name,
           username: this.props.username,
@@ -60,6 +61,6 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
-    this.spawnCommand('pip', ['install', '-r', 'requirements.txt']);
+    this.spawnCommand('pip2', ['install', '-r', this.props.username+'/requirements.txt']);
   }
 });
