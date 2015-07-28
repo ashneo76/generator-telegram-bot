@@ -1,0 +1,5 @@
+telegram:
+  <%= username %>:
+    name: <%= name %>
+    token: <%= token %>
+
