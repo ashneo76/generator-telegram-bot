@@ -17,7 +17,10 @@ describe('telegram-bot:app', function () {
     assert.file([
       'test-bot/config.yml',
       'test-bot/bot.py',
-      'test-bot/requirements.txt'
+      'test-bot/requirements.txt',
+      'test-bot/.gitignore',
+      'test-bot/start.sh',
+      'test-bot/stop.sh'
     ]);
   });
 });

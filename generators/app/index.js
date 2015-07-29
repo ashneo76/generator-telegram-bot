@@ -53,7 +53,20 @@ module.exports = yeoman.generators.Base.extend({
           name: this.props.name,
           username: this.props.username,
           token: this.props.token
-        });
+        }
+      );
+      this.fs.copy(
+        this.templatePath('.gitignore'),
+        this.destinationPath(botname+'/.gitignore')
+      );
+      this.fs.copy(
+        this.templatePath('_start.sh'),
+        this.destinationPath(botname+'/start.sh')
+      );
+      this.fs.copy(
+        this.templatePath('_stop.sh'),
+        this.destinationPath(botname+'/stop.sh')
+      );
     },
 
     projectfiles: function () {
