@@ -20,7 +20,8 @@ describe('telegram-bot:app', function () {
       'test-bot/requirements.txt',
       'test-bot/.gitignore',
       'test-bot/start.sh',
-      'test-bot/stop.sh'
+      'test-bot/stop.sh',
+      'test-bot/status.sh'
     ]);
   });
 });

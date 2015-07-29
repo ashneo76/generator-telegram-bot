@@ -67,6 +67,10 @@ module.exports = yeoman.generators.Base.extend({
         this.templatePath('_stop.sh'),
         this.destinationPath(botname+'/stop.sh')
       );
+      this.fs.copy(
+        this.templatePath('_status.sh'),
+        this.destinationPath(botname+'/status.sh')
+      );
     },
 
     projectfiles: function () {
