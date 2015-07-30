@@ -21,7 +21,8 @@ describe('telegram-bot:app', function () {
       'test-bot/.gitignore',
       'test-bot/start.sh',
       'test-bot/stop.sh',
-      'test-bot/status.sh'
+      'test-bot/status.sh',
+      'test-bot/handlers.py'
     ]);
   });
 });

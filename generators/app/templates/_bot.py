@@ -9,6 +9,7 @@ import string
 import random
 import yaml
 import pyaml
+import handlers
 
 api = None
 tb = None
@@ -89,7 +90,7 @@ def listener(messages):
                         else:
                             res = 'Invalid token. Please try again.'
                 else:
-                    res = msg
+                    res = handlers.handle(msg, config)
         else:
             if len(auth_chats) < config['telegram']['authorization']['max_chats']:
                 res = 'Unrecognized chat. Please authorize using /pair'
