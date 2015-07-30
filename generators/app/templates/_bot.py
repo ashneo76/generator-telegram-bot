@@ -110,7 +110,7 @@ def is_authorized_chat(chat_id, text, content_type):
     auth = False
     logger.debug('is_authorized_chat: ' + str(auth_chats))
     if config['telegram']['authorization']['enabled']:
-        auth = (not auth_chats is None and str(chat_id) in auth_chats) \
+        auth = (not auth_chats is None and chat_id in auth_chats) \
                 or (content_type == 'text' and \
                     (text == '/pair' or \
                      (text.startswith('/auth') and len(text.split(' ')) == 2)))
