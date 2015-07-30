@@ -2,3 +2,4 @@
 *.log
 *.pid
 config.yml
+auth_chats.yml

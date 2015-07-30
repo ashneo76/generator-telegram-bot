@@ -1,6 +1,10 @@
 telegram:
-  whoami: <%= username %>
-  <%= username %>:
-    name: <%= name %>
-    token: <%= token %>
+    whoami: <%= username %>
+    <%= username %>:
+        name: <%= name %>
+        token: <%= token %>
+    authorization:
+        enabled: <%= auth_enabled %>
+        max_chats: <%= auth_max_chats %>
+        auth_timeout: <%= auth_timeout %>
 

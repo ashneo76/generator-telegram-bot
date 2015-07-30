@@ -24,6 +24,28 @@ module.exports = yeoman.generators.Base.extend({
       {
         name: 'token',
         message: 'What is the bot secret token?'
+      },
+      {
+        name: 'auth_enabled',
+        message: 'Do you want to enable authorization?',
+        default: false,
+        type: 'confirm'
+      },
+      {
+        when: function(props) {
+          return props.auth_enabled;
+        },
+        name: 'auth_max_chats',
+        default: 1,
+        message: 'What is the maximum number of authorized chats?'
+      },
+      {
+        when: function(props) {
+          return props.auth_enabled;
+        },
+        name: 'auth_timeout',
+        default: 60000,
+        message: 'What is the timeout for authorization tokens in milliseconds?'
       }
     ];
 
@@ -52,7 +74,10 @@ module.exports = yeoman.generators.Base.extend({
         {
           name: this.props.name,
           username: this.props.username,
-          token: this.props.token
+          token: this.props.token,
+          auth_enabled: this.props.auth_enabled ? 'True' : 'False',
+          auth_max_chats: this.props.auth_max_chats,
+          auth_timeout: this.props.auth_timeout
         }
       );
       this.fs.copy(
