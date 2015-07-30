@@ -90,7 +90,7 @@ def listener(messages):
                         else:
                             res = 'Invalid token. Please try again.'
                 else:
-                    res = handlers.handle(msg, config)
+                    res = handlers.handle(msg, config, logger)
         else:
             if len(auth_chats) < config['telegram']['authorization']['max_chats']:
                 res = 'Unrecognized chat. Please authorize using /pair'

@@ -18,6 +18,9 @@ yo telegram-bot
 
 ## Changelog
 
+#### 0.0.016
+  * Add logger availability to handlers
+
 #### 0.0.15
   * Add support for empty responses
 
