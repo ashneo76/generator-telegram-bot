@@ -18,6 +18,9 @@ yo telegram-bot
 
 ## Changelog
 
+#### 0.0.15
+  * Add support for empty responses
+
 #### 0.0.14
   * Add handlers.py for modularity and code separation
 

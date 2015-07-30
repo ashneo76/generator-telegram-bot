@@ -100,10 +100,11 @@ def listener(messages):
                 res = 'Cannot authenticate.'
                 logger.info('Failed authentication attempt for: ' + str(chat_id) + ': ' + m.chat.username)
 
-        if send_markup:
-            tb.send_message(chat_id, res, reply_markup=res_markup)
-        else:
-            tb.send_message(chat_id, res)
+        if res is not None:
+            if send_markup:
+                tb.send_message(chat_id, res, reply_markup=res_markup)
+            else:
+                tb.send_message(chat_id, res)
 
 
 def is_authorized_chat(chat_id, text, content_type):
