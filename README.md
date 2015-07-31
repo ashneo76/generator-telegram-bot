@@ -18,6 +18,9 @@ yo telegram-bot
 
 ## Changelog
 
+#### 0.0.17
+  * Add support for non-text messages to the bot
+
 #### 0.0.16
   * Add logger availability to handlers
 

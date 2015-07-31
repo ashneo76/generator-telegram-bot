@@ -57,7 +57,7 @@ def listener(messages):
         send_markup = False
         res_markup = types.ReplyKeyboardMarkup()
 
-        if is_authorized_chat(m.chat.id, m.text, m.content_type):
+        if is_authorized_chat(m):
             if m.content_type == 'text':
                 msg = m.text
 
@@ -91,6 +91,8 @@ def listener(messages):
                             res = 'Invalid token. Please try again.'
                 else:
                     res = handlers.handle(msg, config, logger)
+            else:
+                res = 'Content type not handled. Just yet!'
         else:
             if len(auth_chats) < config['telegram']['authorization']['max_chats']:
                 res = 'Unrecognized chat. Please authorize using /pair'
@@ -107,8 +109,16 @@ def listener(messages):
                 tb.send_message(chat_id, res)
 
 
-def is_authorized_chat(chat_id, text, content_type):
+def is_authorized_chat(m):
     global config, auth_chats, logger
+
+    chat_id = m.chat.id
+    content_type = m.content_type
+    if content_type != 'text' or not hasattr(m, 'text'):
+        text = ''
+    else:
+        text = m.text
+
     auth = False
     logger.debug('is_authorized_chat: ' + str(auth_chats))
     if config['telegram']['authorization']['enabled']:
