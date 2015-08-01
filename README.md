@@ -18,6 +18,9 @@ yo telegram-bot
 
 ## Changelog
 
+#### 0.0.19
+  * Fix the silliest bug of my life
+
 #### 0.0.18
   * Add support for sending non-text messages
 

@@ -80,7 +80,7 @@ def listener(messages):
                     else:
                         tokens = msg.split(' ')
                         if len(tokens) == 2 and str(chat_id) in token and tokens[1] == token[str(chat_id)]['key']:
-                            status = add_auth_chat(str(chat_id))
+                            status = add_auth_chat(chat_id)
                             if status:
                                 logger.info('Authenticated chat for: {0} [{1}]'.format(m.chat.username, str(chat_id)))
                                 res = text_res('Successfully authenticated.')
@@ -132,6 +132,7 @@ def is_authorized_chat(m):
         text = m.text
 
     auth = False
+    logger.info(str(auth_chats))
     logger.debug('is_authorized_chat: ' + str(auth_chats))
     if config['telegram']['authorization']['enabled']:
         auth = (not auth_chats is None and chat_id in auth_chats) \
