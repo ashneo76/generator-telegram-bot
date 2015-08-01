@@ -92,7 +92,7 @@ def listener(messages):
                 else:
                     res = handlers.handle(msg, config, logger)
             else:
-                res = text_res('Content type not handled. Just yet!')
+                res = text_res('Content type not handled. Just yet!: ' + m.content_type)
         else:
             if len(auth_chats) < config['telegram']['authorization']['max_chats']:
                 res = text_res('Unrecognized chat. Please authorize using /pair')
@@ -112,6 +112,12 @@ def listener(messages):
                 with open(res['path'], 'rb') as f:
                     tb.send_photo(chat_id, f)
                     f.close()
+            elif res['type'] == 'document':
+                logger.debug('Starting upload:')
+                with open(res['path'], 'rb') as f:
+                    tb.send_document(chat_id, f)
+                    f.close()
+                    logger.debug('Done uploading')
             else:
                 pass
         else:
@@ -132,7 +138,7 @@ def is_authorized_chat(m):
         text = m.text
 
     auth = False
-    logger.info(str(auth_chats))
+    # logger.debug(str(auth_chats))
     logger.debug('is_authorized_chat: ' + str(auth_chats))
     if config['telegram']['authorization']['enabled']:
         auth = (not auth_chats is None and chat_id in auth_chats) \
