@@ -53,7 +53,7 @@ def listener(messages):
         chat_id = m.chat.id
         tb.send_chat_action(chat_id, 'typing')
 
-        res = ''
+        res = text_res('')
         send_markup = False
         res_markup = types.ReplyKeyboardMarkup()
 
@@ -62,51 +62,63 @@ def listener(messages):
                 msg = m.text
 
                 if msg == '/begin':
-                    res = 'Hi there!'
+                    res = text_res('Hi there!')
                 elif msg.startswith('/pair'):
                     if chat_id in auth_chats:
-                        res = 'Already authenticated'
+                        res = text_res('Already authenticated')
                     else:
                         tokens = msg.split(' ')
                         if len(auth_chats) < config['telegram']['authorization']['max_chats']:
-                            res = 'Please enter authentication token: /auth <token>'
+                            res = text_res('Please enter authentication token: /auth <token>')
                             token[str(chat_id)] = {'time': None, 'key': id_generator()}
                             logger.info('Authentication token for: ' + str(chat_id) + ': ' + token[str(chat_id)]['key'])
                         else:
                             logger.info('Cannot authenticate: ' + str(chat_id) + ': ' + m.chat.username)
                 elif msg.startswith('/auth'):
                     if chat_id in auth_chats:
-                        res = 'Already authenticated'
+                        res = text_res('Already authenticated')
                     else:
                         tokens = msg.split(' ')
                         if len(tokens) == 2 and str(chat_id) in token and tokens[1] == token[str(chat_id)]['key']:
                             status = add_auth_chat(str(chat_id))
                             if status:
                                 logger.info('Authenticated chat for: {0} [{1}]'.format(m.chat.username, str(chat_id)))
-                                res = 'Successfully authenticated.'
+                                res = text_res('Successfully authenticated.')
                                 send_markup = True
                             else:
-                                res = 'Cannot authenticate.'
+                                res = text_res('Cannot authenticate.')
                         else:
-                            res = 'Invalid token. Please try again.'
+                            res = text_res('Invalid token. Please try again.')
                 else:
                     res = handlers.handle(msg, config, logger)
             else:
-                res = 'Content type not handled. Just yet!'
+                res = text_res('Content type not handled. Just yet!')
         else:
             if len(auth_chats) < config['telegram']['authorization']['max_chats']:
-                res = 'Unrecognized chat. Please authorize using /pair'
+                res = text_res('Unrecognized chat. Please authorize using /pair')
                 send_markup = True
                 res_markup.row('/pair')
             else:
-                res = 'Cannot authenticate.'
+                res = text_res('Cannot authenticate.')
                 logger.info('Failed authentication attempt for: ' + str(chat_id) + ': ' + m.chat.username)
 
         if res is not None:
-            if send_markup:
-                tb.send_message(chat_id, res, reply_markup=res_markup)
+            if res['type'] == 'text':
+                if send_markup:
+                    tb.send_message(chat_id, res['message'], reply_markup=res_markup)
+                else:
+                    tb.send_message(chat_id, res['message'])
+            elif res['type'] == 'image':
+                with open(res['path'], 'rb') as f:
+                    tb.send_photo(chat_id, f)
+                    f.close()
             else:
-                tb.send_message(chat_id, res)
+                pass
+        else:
+            pass
+
+def text_res(msg):
+    return {'type': 'text', 'message': msg}
 
 
 def is_authorized_chat(m):

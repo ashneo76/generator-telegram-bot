@@ -1,2 +1,2 @@
 def handle(msg, config, logger):
-    return msg
+    return {'type': 'text', 'message': msg}
